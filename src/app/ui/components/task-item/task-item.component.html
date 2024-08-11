@@ -1,0 +1,5 @@
+<li [class.is-completed]="task.isCompleted">
+    <input type="checkbox" (change)="onCheckboxChange($event)" [checked]="task.isCompleted">
+    <span class="task-title">{{ task.title }}</span>
+    <button (click)="deleteTask()">Delete</button>
+</li>

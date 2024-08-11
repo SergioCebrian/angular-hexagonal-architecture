@@ -10,6 +10,7 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+package-lock.json
 
 # IDEs and editors
 .idea/
@@ -18,6 +19,7 @@ yarn-error.log
 .c9/
 *.launch
 .settings/
+*.code-workspace
 *.sublime-workspace
 
 # Visual Studio Code
@@ -40,3 +42,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+.nx/cache
+.nx/workspace-data

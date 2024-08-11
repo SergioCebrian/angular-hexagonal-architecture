@@ -2,6 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -22,7 +23,14 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@env/*": ["src/environments/*"],
+      "@infra/*": ["src/app/core/infrastructure/*"],
+      "@task:domain/*": ["src/app/core/tasks/domain/*"],
+      "@task:infra/*": ["src/app/core/tasks/infrastructure/*"],
+      "@components/*": ["src/app/ui/components/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
