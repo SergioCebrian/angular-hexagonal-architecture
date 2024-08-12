@@ -10,7 +10,7 @@ import { ITask } from '@task:domain/models/task';
   styleUrl: './task-create-form.component.scss'
 })
 export class TaskCreateFormComponent {
-  @Input() total = 0;
+  @Input({ required: true }) total = 0;
   @Output() addEvent: EventEmitter<ITask> = new EventEmitter<ITask>();
   
   createTaskForm = new FormGroup({

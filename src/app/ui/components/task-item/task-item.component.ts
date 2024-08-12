@@ -9,7 +9,7 @@ import { ITask } from '@task:domain/models/task';
   styleUrl: './task-item.component.scss'
 })
 export class TaskItemComponent {
-  @Input() task!: ITask;
+  @Input({ required: true }) task!: ITask;
   @Output() deleteEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() updateEvent: EventEmitter<ITask> = new EventEmitter<ITask>();
 
