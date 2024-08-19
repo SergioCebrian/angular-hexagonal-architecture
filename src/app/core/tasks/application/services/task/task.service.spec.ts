@@ -5,7 +5,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { HttpService } from '@infra/http/http.service';
 import { ITask } from '@task:domain/models/task';
-import { of } from 'rxjs';
 
 describe('TaskService', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,45 +34,38 @@ describe('TaskService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('[getTasks] should return an array', () => {
-    httpServiceSpy.getAll.and.returnValue(of([mockTask]));
-
-    service.getTasks().subscribe((tasks: ITask[]) => {
-      expect(tasks).toEqual([mockTask]);
-    });
-
+  it('[getTasks] should return an array', async() => {
+    httpServiceSpy.getAll.and.returnValue(Promise.resolve([mockTask]));
+    const result: ITask[] = await service.getTasks();
+    expect(result).toEqual([mockTask]);
     expect(httpServiceSpy.getAll).toHaveBeenCalledOnceWith(apiUrlMock);
   });
 
-  it('[getTask] should return a task', () => {
-    httpServiceSpy.getOne.and.returnValue(of(mockTask));
-
-    service.getTask('1').subscribe((task: ITask) => {
-      expect(task).toEqual(mockTask);
-    });
-
+  it('[getTask] should return a task', async() => {
+    httpServiceSpy.getOne.and.returnValue(Promise.resolve(mockTask));
+    const result: ITask = await service.getTask('1');
+    expect(result).toEqual(mockTask);
     expect(httpServiceSpy.getOne).toHaveBeenCalledWith(`${apiUrlMock}/1`);
   });
 
-  it('[addTask] should return a new task', () => {
-    httpServiceSpy.create.and.returnValue(of(mockTask));
-
-    service.addTask(mockTask).subscribe((task: ITask) => {
-      expect(task).toEqual(mockTask);
-    });
-
+  it('[addTask] should return a new task', async() => {
+    httpServiceSpy.create.and.returnValue(Promise.resolve(mockTask));
+    const result: ITask = await service.addTask(mockTask);
+    expect(result).toEqual(mockTask);
     expect(httpServiceSpy.create).toHaveBeenCalledWith(apiUrlMock, mockTask);
   });
 
-  it('[updateTask] should update a task', () => {
-    httpServiceSpy.update.and.returnValue(of(mockTask));
-    service.updateTask(mockTask);
+  it('[updateTask] should update a task', async() => {
+    httpServiceSpy.update.and.returnValue(Promise.resolve(mockTask));
+    const result: void = await service.updateTask(mockTask);
+    expect(result).toEqual(undefined);
     expect(httpServiceSpy.update).toHaveBeenCalledWith(`${apiUrlMock}/1`, mockTask);
   });
 
-  it('[deleteTask] should delete a task', () => {
-    httpServiceSpy.delete.and.returnValue(of());
-    service.deleteTask('1');
+  it('[deleteTask] should delete a task', async() => {
+    httpServiceSpy.delete.and.returnValue(Promise.resolve());
+    const result: void = await service.deleteTask('1');
+    expect(result).toEqual(undefined);
     expect(httpServiceSpy.delete).toHaveBeenCalledWith(`${apiUrlMock}/1`);
   });
 });

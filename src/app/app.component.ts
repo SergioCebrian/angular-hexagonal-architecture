@@ -1,8 +1,6 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { map, Observable } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ITask } from '@task:domain/models/task';
 import { TaskCreateFormComponent } from '@components/task-create-form/task-create-form.component';
 import { TaskItemComponent } from '@components/task-item/task-item.component';
@@ -16,53 +14,39 @@ import { TaskService } from '@task:application/services/task/task.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  tasks$!: Observable<ITask[]>;
-  readonly #destroy: DestroyRef = inject(DestroyRef);
+  tasks: WritableSignal<ITask[]> = signal<ITask[]>([]);
   readonly #taskService = inject(TaskService);
 
-  ngOnInit(): void {
-    this.tasks$ = this.loadTasks();
+  async ngOnInit(): Promise<void> {
+    this.tasks.set(await this.#loadTasks());
   }
 
-  private loadTasks(): Observable<ITask[]> {
-    return this.#taskService.getTasks();
+  async #loadTasks(): Promise<ITask[]> {
+    return await this.#taskService.getTasks();
   }
 
-  addTask(task: ITask): void {
-    this.#taskService.addTask(task)
-      .pipe(takeUntilDestroyed(this.#destroy))
-      .subscribe(() => {
-        this.tasks$ = this.tasks$.pipe(
-          map((tasks: ITask[]) => {
-            return tasks.some((taskItem: ITask) => taskItem.id === task.id) 
-              ? tasks 
-              : [...tasks, task];
-          })
-        );
-      });
+  async addTask(task: ITask): Promise<void> {
+    const response: ITask = await this.#taskService.addTask(task);
+    if (response) {
+      this.tasks.update((tasks: ITask[]) => [...tasks, task]);
+    }
   }
 
-  deleteTask(id: string): void {
-    this.#taskService.deleteTask(id)
-      .pipe(takeUntilDestroyed(this.#destroy))
-      .subscribe(() => {
-        this.tasks$ = this.tasks$.pipe(
-          map((tasks: ITask[]) => tasks.filter((taskItem: ITask) => taskItem.id !== id))
-        );
-      });
+  async deleteTask(id: string): Promise<void> {
+    const response: unknown = await this.#taskService.deleteTask(id);
+    if (response) {
+      this.tasks.update((tasks: ITask[]) =>
+        tasks.filter((taskItem: ITask) => taskItem.id !== id)
+      );
+    }
   }
 
-  updateTask(task: ITask): void {
-    this.#taskService.updateTask(task)
-      .pipe(takeUntilDestroyed(this.#destroy))
-      .subscribe(() => {
-        this.tasks$ = this.tasks$.pipe(
-          map((tasks: ITask[]) =>
-            tasks.map((taskItem: ITask) =>
-              taskItem.id === task.id ? task : taskItem
-            )
-          )
-        );
-      });
+  async updateTask(task: ITask): Promise<void> {
+    const response: unknown = await this.#taskService.updateTask(task);
+    if (response) {
+      this.tasks.update((tasks: ITask[]) =>
+        tasks.map((taskItem: ITask) => taskItem.id === task.id ? task : taskItem)
+      );
+    }
   }
 }

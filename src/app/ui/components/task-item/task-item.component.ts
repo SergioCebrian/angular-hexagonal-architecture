@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { ITask } from '@task:domain/models/task';
 
 @Component({
@@ -9,18 +9,18 @@ import { ITask } from '@task:domain/models/task';
   styleUrl: './task-item.component.scss'
 })
 export class TaskItemComponent {
-  @Input({ required: true }) task!: ITask;
-  @Output() deleteEvent: EventEmitter<string> = new EventEmitter<string>();
-  @Output() updateEvent: EventEmitter<ITask> = new EventEmitter<ITask>();
+  task: InputSignal<ITask> = input.required<ITask>();
+  deleteEvent: OutputEmitterRef<string> = output<string>();
+  updateEvent: OutputEmitterRef<ITask> = output<ITask>();
 
   deleteTask(): void {
-    this.deleteEvent.emit(this.task?.id);
+    this.deleteEvent.emit(this.task().id);
   }
 
   onCheckboxChange(event: Event): void {
     const checkedStatus = (<HTMLInputElement>event.target).checked;
-    this.task.isCompleted = checkedStatus;
-    const task: ITask = { ...this.task, isCompleted: checkedStatus };
+    this.task().isCompleted = checkedStatus;
+    const task: ITask = { ...this.task(), isCompleted: checkedStatus };
     this.updateEvent.emit(task);
   }
 }

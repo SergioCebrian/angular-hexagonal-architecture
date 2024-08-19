@@ -42,10 +42,10 @@ describe('TaskCreateFormComponent', () => {
     expect(control?.valid).toBeFalse(); 
   });
 
-  it('[addEvent: valid] should emit addEvent with the new task when addTask is called and the form is valid', () => {
+  it('[addEvent: valid] should emit addEvent with the new task when addTask is called and the form is valid', async() => {
     spyOn(component.addEvent, 'emit');
 
-    component.total = 0;
+    fixture.componentRef.setInput('total', [0]);
     component.createTaskForm.get('title')?.setValue('Task 1');
     component.addTask();
 

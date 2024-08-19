@@ -47,7 +47,7 @@ describe('TaskItemComponent', () => {
   it('[onCheckboxChange] should update isCompleted property in task object when onCheckboxChange is called', () => {
     const event: Event = { target: { checked: true } } as unknown as Event;
     component.onCheckboxChange(event);
-    expect(component.task.isCompleted).toBeTrue();
+    expect(component.task().isCompleted).toBeTrue();
   });
 
   it('[Component: title] should display the correct task title in the template', () => {

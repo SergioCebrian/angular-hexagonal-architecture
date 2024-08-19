@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { HttpService } from '@infra/http/http.service';
 import { ITask } from '@task:domain/models/task';
 import { TaskRepository } from '@task:domain/repositories/task-repository';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,26 +11,26 @@ export class TaskService implements TaskRepository {
   readonly #apiUrl = 'tasks';
   #httpService = inject(HttpService);
   
-  getTasks(): Observable<ITask[]> {
-    return this.#httpService.getAll(this.#apiUrl);
+  async getTasks(): Promise<ITask[]> {
+    return await this.#httpService.getAll(this.#apiUrl);
   }
 
-  getTask(id: string): Observable<ITask> {
+  async getTask(id: string): Promise<ITask> {
     const taskUrl = `${ this.#apiUrl }/${ id }`;
-    return this.#httpService.getOne(taskUrl); 
+    return await this.#httpService.getOne(taskUrl); 
   }
 
-  addTask(task: ITask): Observable<ITask> {
-    return this.#httpService.create(this.#apiUrl, task); 
+  async addTask(task: ITask): Promise<ITask> {
+    return await this.#httpService.create(this.#apiUrl, task); 
   }
 
-  updateTask(task: ITask): Observable<void> {
+  async updateTask(task: ITask): Promise<void> {
     const taskUrl = `${ this.#apiUrl }/${ task.id }`;
-    return this.#httpService.update(taskUrl, task);
+    return await this.#httpService.update(taskUrl, task);
   }
 
-  deleteTask(id: string): Observable<void> {
+  async deleteTask(id: string): Promise<void> {
     const taskUrl = `${ this.#apiUrl }/${ id }`;
-    return this.#httpService.delete(taskUrl);
+    return await this.#httpService.delete(taskUrl);
   }
 }
