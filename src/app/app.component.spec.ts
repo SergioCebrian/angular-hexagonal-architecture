@@ -1,30 +1,30 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { TaskRepository } from '@task:domain/repositories/task-repository';
 import { ITask } from '@task:domain/models/task';
 import { of } from 'rxjs';
+import { TaskService } from '@task:application/services/task/task.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let taskRepositorySpy: jasmine.SpyObj<TaskRepository>;
+  let taskServiceSpy: jasmine.SpyObj<TaskService>;
   const mockTask: ITask = { id: '1', title: 'Task 1', isCompleted: false };
 
   beforeEach(async () => {
-    const spy = jasmine.createSpyObj('TaskRepository', ['getTasks', 'addTask', 'deleteTask', 'updateTask']);
+    const spy = jasmine.createSpyObj('TaskService', ['getTasks', 'addTask', 'deleteTask', 'updateTask']);
 
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
-        TaskRepository,
-        { provide: TaskRepository, useValue: spy }
+        TaskService,
+        { provide: TaskService, useValue: spy }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    taskRepositorySpy = TestBed.inject(TaskRepository) as jasmine.SpyObj<TaskRepository>;
-    taskRepositorySpy.getTasks.and.returnValue(of([mockTask]));
+    taskServiceSpy = TestBed.inject(TaskService) as jasmine.SpyObj<TaskService>;
+    taskServiceSpy.getTasks.and.returnValue(of([mockTask]));
     fixture.detectChanges();
   });
 
@@ -46,12 +46,12 @@ describe('AppComponent', () => {
     result.subscribe((tasks: ITask[]) => {
       expect(tasks).toEqual([mockTask]);
     });
-    expect(taskRepositorySpy.getTasks).toHaveBeenCalledTimes(2);
+    expect(taskServiceSpy.getTasks).toHaveBeenCalledTimes(2);
   });
 
   it('[addTask] should add a task and update tasks$', () => {
     const newTask: ITask = { id: '2', title: 'New Task', isCompleted: false };
-    taskRepositorySpy.addTask.and.returnValue(of(newTask));
+    taskServiceSpy.addTask.and.returnValue(of(newTask));
 
     component.tasks$ = of([mockTask]);
     component.addTask(newTask);
@@ -60,12 +60,12 @@ describe('AppComponent', () => {
       expect(tasks.length).toBe(2);
     });
 
-    expect(taskRepositorySpy.addTask).toHaveBeenCalledWith(newTask);
+    expect(taskServiceSpy.addTask).toHaveBeenCalledWith(newTask);
   });
 
   it('[deleteTask] should delete a task and update tasks$', () => {
     const taskId = mockTask.id;
-    taskRepositorySpy.deleteTask.and.returnValue(of(void 0));
+    taskServiceSpy.deleteTask.and.returnValue(of(void 0));
 
     component.tasks$ = of([mockTask]);
     component.deleteTask(taskId);
@@ -74,12 +74,12 @@ describe('AppComponent', () => {
       expect(tasks.length).toBe(0);
     });
 
-    expect(taskRepositorySpy.deleteTask).toHaveBeenCalledWith(taskId);
+    expect(taskServiceSpy.deleteTask).toHaveBeenCalledWith(taskId);
   });
 
   it('[updateTask] should update a task and update tasks$', () => {
     const updatedTask: ITask = { id: '1', title: 'Updated Task', isCompleted: true };
-    taskRepositorySpy.updateTask.and.returnValue(of(void 0));
+    taskServiceSpy.updateTask.and.returnValue(of(void 0));
 
     component.tasks$ = of([mockTask]);
     component.updateTask(updatedTask);
@@ -90,6 +90,6 @@ describe('AppComponent', () => {
       expect(filteredTask?.isCompleted).toBeTrue();
     });
 
-    expect(taskRepositorySpy.updateTask).toHaveBeenCalledWith(updatedTask);
+    expect(taskServiceSpy.updateTask).toHaveBeenCalledWith(updatedTask);
   });
 });
