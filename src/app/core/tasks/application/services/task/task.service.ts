@@ -1,12 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpService } from '@infra/http/http.service';
 import { ITask } from '@task:domain/models/task';
+import { TaskRepository } from '@task:domain/repositories/task-repository';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskService {
+export class TaskService implements TaskRepository {
 
   readonly #apiUrl = 'tasks';
   #httpService = inject(HttpService);

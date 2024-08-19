@@ -28,7 +28,7 @@
       "@env/*": ["src/environments/*"],
       "@infra/*": ["src/app/core/infrastructure/*"],
       "@task:domain/*": ["src/app/core/tasks/domain/*"],
-      "@task:infra/*": ["src/app/core/tasks/infrastructure/*"],
+      "@task:application/*": ["src/app/core/tasks/application/*"],
       "@components/*": ["src/app/ui/components/*"]
     }
   },

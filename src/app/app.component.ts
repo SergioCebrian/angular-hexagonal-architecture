@@ -6,7 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ITask } from '@task:domain/models/task';
 import { TaskCreateFormComponent } from '@components/task-create-form/task-create-form.component';
 import { TaskItemComponent } from '@components/task-item/task-item.component';
-import { TaskRepository } from '@task:domain/repositories/task-repository';
+import { TaskService } from '@task:application/services/task/task.service';
 
 @Component({
   selector: 'app-root',
@@ -18,18 +18,18 @@ import { TaskRepository } from '@task:domain/repositories/task-repository';
 export class AppComponent implements OnInit {
   tasks$!: Observable<ITask[]>;
   readonly #destroy: DestroyRef = inject(DestroyRef);
-  readonly #taskRepository = inject(TaskRepository);
+  readonly #taskService = inject(TaskService);
 
   ngOnInit(): void {
     this.tasks$ = this.loadTasks();
   }
 
   private loadTasks(): Observable<ITask[]> {
-    return this.#taskRepository.getTasks();
+    return this.#taskService.getTasks();
   }
 
   addTask(task: ITask): void {
-    this.#taskRepository.addTask(task)
+    this.#taskService.addTask(task)
       .pipe(takeUntilDestroyed(this.#destroy))
       .subscribe(() => {
         this.tasks$ = this.tasks$.pipe(
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
   }
 
   deleteTask(id: string): void {
-    this.#taskRepository.deleteTask(id)
+    this.#taskService.deleteTask(id)
       .pipe(takeUntilDestroyed(this.#destroy))
       .subscribe(() => {
         this.tasks$ = this.tasks$.pipe(
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
   }
 
   updateTask(task: ITask): void {
-    this.#taskRepository.updateTask(task)
+    this.#taskService.updateTask(task)
       .pipe(takeUntilDestroyed(this.#destroy))
       .subscribe(() => {
         this.tasks$ = this.tasks$.pipe(
