@@ -1,5 +1,7 @@
-import { Component, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
+import { Component, inject, input, InputSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TaskStore } from '@task:application/store/task-store';
+import { SaveTaskUseCase } from '@task:application/usecases/save-task-usecase/save-task-usecase';
 import { ITask } from '@task:domain/models/task';
 
 @Component({
@@ -11,13 +13,14 @@ import { ITask } from '@task:domain/models/task';
 })
 export class TaskCreateFormComponent {
   total: InputSignal<number> = input<number>(0);
-  addEvent: OutputEmitterRef<ITask> = output<ITask>();
-  
+  readonly #addTaskUseCase = inject(SaveTaskUseCase);
+  readonly #taskStore = inject(TaskStore);
+
   createTaskForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(30)]),
   });
 
-  addTask(): void {
+  async addTask(): Promise<void> {
     if (this.createTaskForm.valid) {
       const newId = (this.total() + 1);
       const newTask: ITask = {
@@ -25,7 +28,10 @@ export class TaskCreateFormComponent {
         title: this.createTaskForm.value.title as string,
         isCompleted: false,
       };
-      this.addEvent.emit(newTask); 
+      const response: ITask = await this.#addTaskUseCase.saveTask(newTask);
+      if (response) {
+        this.#taskStore.saveTaskAction(newTask);
+      } 
       this.createTaskForm.reset();
     }
   }

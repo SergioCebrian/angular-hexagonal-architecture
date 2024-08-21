@@ -1,9 +1,9 @@
 <main>
-  <app-task-create-form [total]="tasks().length" (addEvent)="addTask($event)" />
+  <app-task-create-form [total]="tasks().length" />
   @if (tasks().length > 0) {
     <ul>
       @for (task of tasks(); track task.id) {
-        <app-task-item [task]="task" (deleteEvent)="deleteTask($event)" (updateEvent)="updateTask($event)" />
+        <app-task-item [task]="task" />
       }
     </ul>
   }

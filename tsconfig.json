@@ -25,6 +25,7 @@
       "dom"
     ],
     "paths": {
+      "@config/*": ["src/app/config/*"],
       "@env/*": ["src/environments/*"],
       "@infra/*": ["src/app/core/infrastructure/*"],
       "@task:domain/*": ["src/app/core/tasks/domain/*"],

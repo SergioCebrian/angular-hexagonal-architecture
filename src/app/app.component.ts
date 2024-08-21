@@ -4,7 +4,8 @@ import { AsyncPipe } from '@angular/common';
 import { ITask } from '@task:domain/models/task';
 import { TaskCreateFormComponent } from '@components/task-create-form/task-create-form.component';
 import { TaskItemComponent } from '@components/task-item/task-item.component';
-import { TaskService } from '@task:application/services/task/task.service';
+import { GetTasksUseCase } from '@task:application/usecases/get-tasks-usecase/get-tasks-usecase';
+import { TaskStore } from '@task:application/store/task-store';
 
 @Component({
   selector: 'app-root',
@@ -15,38 +16,15 @@ import { TaskService } from '@task:application/services/task/task.service';
 })
 export class AppComponent implements OnInit {
   tasks: WritableSignal<ITask[]> = signal<ITask[]>([]);
-  readonly #taskService = inject(TaskService);
+  readonly #getTasksUseCase = inject(GetTasksUseCase);
+  readonly #taskStore = inject(TaskStore);
 
   async ngOnInit(): Promise<void> {
-    this.tasks.set(await this.#loadTasks());
+    this.#taskStore.setTasksAction(await this.#loadTasks());
+    this.tasks = this.#taskStore.loadTasksAction();
   }
 
   async #loadTasks(): Promise<ITask[]> {
-    return await this.#taskService.getTasks();
-  }
-
-  async addTask(task: ITask): Promise<void> {
-    const response: ITask = await this.#taskService.addTask(task);
-    if (response) {
-      this.tasks.update((tasks: ITask[]) => [...tasks, task]);
-    }
-  }
-
-  async deleteTask(id: string): Promise<void> {
-    const response: unknown = await this.#taskService.deleteTask(id);
-    if (response) {
-      this.tasks.update((tasks: ITask[]) =>
-        tasks.filter((taskItem: ITask) => taskItem.id !== id)
-      );
-    }
-  }
-
-  async updateTask(task: ITask): Promise<void> {
-    const response: unknown = await this.#taskService.updateTask(task);
-    if (response) {
-      this.tasks.update((tasks: ITask[]) =>
-        tasks.map((taskItem: ITask) => taskItem.id === task.id ? task : taskItem)
-      );
-    }
+    return await this.#getTasksUseCase.getTasks();
   }
 }
