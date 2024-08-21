@@ -1,4 +1,4 @@
-import { SaveTaskUseCase } from './save-task';
+import { SaveTaskUseCase } from './save-task-usecase';
 
 describe('SaveTaskUseCase', () => {
   it('should create an instance', () => {

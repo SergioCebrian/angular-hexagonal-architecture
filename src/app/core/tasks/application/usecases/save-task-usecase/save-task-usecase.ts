@@ -9,6 +9,6 @@ export class SaveTaskUseCase {
     readonly #taskRepository = inject(TaskRepository);
 
     async saveTask(task: ITask): Promise<ITask> {
-        return await this.#taskRepository.addTask(task); 
+        return await this.#taskRepository.saveTask(task); 
     }
 }

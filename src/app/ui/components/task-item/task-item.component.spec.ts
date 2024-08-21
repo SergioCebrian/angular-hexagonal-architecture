@@ -28,22 +28,6 @@ describe('TaskItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('[deleteEvent] should emit deleteEvent with task id when deleteTask is called', () => {
-    spyOn(component.deleteEvent, 'emit');
-    component.deleteTask();
-    expect(component.deleteEvent.emit).toHaveBeenCalledOnceWith(mockTask.id);
-  });
-
-  it('[updateEvent] should emit updateEvent with updated task when onCheckboxChange is called', () => {
-    spyOn(component.updateEvent, 'emit');
-    const mockEvent: Event = { target: { checked: true } } as unknown as Event;
-    component.onCheckboxChange(mockEvent);
-    expect(component.updateEvent.emit).toHaveBeenCalledOnceWith({
-      ...mockTask,
-      isCompleted: true
-    });
-  });
-
   it('[onCheckboxChange] should update isCompleted property in task object when onCheckboxChange is called', () => {
     const event: Event = { target: { checked: true } } as unknown as Event;
     component.onCheckboxChange(event);

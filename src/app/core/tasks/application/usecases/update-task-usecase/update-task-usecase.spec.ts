@@ -1,4 +1,4 @@
-import { UpdateTaskUseCase } from './update-task';
+import { UpdateTaskUseCase } from './update-task-usecase';
 
 describe('UpdateTaskUseCase', () => {
   it('should create an instance', () => {

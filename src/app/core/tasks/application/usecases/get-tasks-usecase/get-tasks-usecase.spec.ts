@@ -1,4 +1,4 @@
-import { GetTasksUseCase } from './get-tasks';
+import { GetTasksUseCase } from './get-tasks-usecase';
 
 describe('GetTasksUseCase', () => {
   it('should create an instance', () => {

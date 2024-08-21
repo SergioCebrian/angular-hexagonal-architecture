@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { ITask } from '@task:domain/models/task';
@@ -10,9 +16,14 @@ import { TaskStore } from '@task:application/store/task-store';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TaskCreateFormComponent, TaskItemComponent, AsyncPipe],
+  imports: [
+    RouterOutlet,
+    TaskCreateFormComponent,
+    TaskItemComponent,
+    AsyncPipe,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   tasks: WritableSignal<ITask[]> = signal<ITask[]>([]);

@@ -1,4 +1,4 @@
-import { DeleteTaskUseCase } from './delete-task';
+import { DeleteTaskUseCase } from './delete-task-usecase';
 
 describe('DeleteTaskUseCase', () => {
   it('should create an instance', () => {

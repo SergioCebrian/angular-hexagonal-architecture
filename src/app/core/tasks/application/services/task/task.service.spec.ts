@@ -48,9 +48,9 @@ describe('TaskService', () => {
     expect(httpServiceSpy.getOne).toHaveBeenCalledWith(`${apiUrlMock}/1`);
   });
 
-  it('[addTask] should return a new task', async() => {
+  it('[saveTask] should return a new task', async() => {
     httpServiceSpy.create.and.returnValue(Promise.resolve(mockTask));
-    const result: ITask = await service.addTask(mockTask);
+    const result: ITask = await service.saveTask(mockTask);
     expect(result).toEqual(mockTask);
     expect(httpServiceSpy.create).toHaveBeenCalledWith(apiUrlMock, mockTask);
   });

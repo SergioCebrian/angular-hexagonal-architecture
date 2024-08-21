@@ -13,14 +13,14 @@ import { ITask } from '@task:domain/models/task';
 })
 export class TaskCreateFormComponent {
   total: InputSignal<number> = input<number>(0);
-  readonly #addTaskUseCase = inject(SaveTaskUseCase);
+  readonly #saveTaskUseCase = inject(SaveTaskUseCase);
   readonly #taskStore = inject(TaskStore);
 
   createTaskForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(30)]),
   });
 
-  async addTask(): Promise<void> {
+  async saveTask(): Promise<void> {
     if (this.createTaskForm.valid) {
       const newId = (this.total() + 1);
       const newTask: ITask = {
@@ -28,7 +28,7 @@ export class TaskCreateFormComponent {
         title: this.createTaskForm.value.title as string,
         isCompleted: false,
       };
-      const response: ITask = await this.#addTaskUseCase.saveTask(newTask);
+      const response: ITask = await this.#saveTaskUseCase.saveTask(newTask);
       if (response) {
         this.#taskStore.saveTaskAction(newTask);
       } 

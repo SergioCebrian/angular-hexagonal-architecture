@@ -10,7 +10,7 @@ describe('AppComponent', () => {
   const mockTask: ITask = { id: '1', title: 'Task 1', isCompleted: false };
 
   beforeEach(async () => {
-    const spy = jasmine.createSpyObj('TaskService', ['getTasks', 'addTask', 'deleteTask', 'updateTask']);
+    const spy = jasmine.createSpyObj('TaskService', ['getTasks', 'saveTask', 'deleteTask', 'updateTask']);
 
     await TestBed.configureTestingModule({
       imports: [AppComponent],
@@ -45,14 +45,14 @@ describe('AppComponent', () => {
   });*/
 
   /*
-  it('[addTask] should add a task and update tasks', () => {
+  it('[saveTask] should add a task and update tasks', () => {
     const newTask: ITask = { id: '2', title: 'New Task', isCompleted: false };
-    taskServiceSpy.addTask.and.returnValue(Promise.resolve(newTask));
+    taskServiceSpy.saveTask.and.returnValue(Promise.resolve(newTask));
     component.tasks.set([mockTask]);
-    component.addTask(newTask);
+    component.saveTask(newTask);
     expect(component.tasks()).toContain(newTask);
     expect(component.tasks().length).toBe(2);
-    expect(taskServiceSpy.addTask).toHaveBeenCalledWith(newTask);
+    expect(taskServiceSpy.saveTask).toHaveBeenCalledWith(newTask);
   });
 
   it('[deleteTask] should delete a task and update tasks', () => {
