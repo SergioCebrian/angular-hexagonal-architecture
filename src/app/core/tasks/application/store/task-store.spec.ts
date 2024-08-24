@@ -1,7 +1,7 @@
-/* import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { TaskStore } from './task-store';
 import { ITask } from '@task:domain/models/task.model';
-import { signal } from '@angular/core';
+import { WritableSignal } from '@angular/core';
 
 describe('TaskStore', () => {
   let store: TaskStore;
@@ -19,24 +19,22 @@ describe('TaskStore', () => {
   });
 
   it('[setTasksAction] should set tasks correctly with setTasksAction', () => {
-    const tasks: ITask[] = [
+    const mockTasks: ITask[] = [
       { id: '1', title: 'Task 1', isCompleted: false },
       { id: '2', title: 'Task 2', isCompleted: true },
     ];
+    store.setTasksAction(mockTasks);
 
-    store.setTasksAction(tasks);
-
-    const result = store.loadTasksAction();
-    expect(result).toEqual(signal(tasks));
+    const result: WritableSignal<ITask[]> = store.loadTasksAction();
+    expect(result()).toEqual(mockTasks);
   });
 
   it('[saveTaskAction] should add a task correctly with saveTaskAction', () => {
-    const task: ITask = { id: '1', title: 'New Task', isCompleted: false };
+    const mockTasks: ITask = { id: '1', title: 'New Task', isCompleted: false };
+    store.saveTaskAction(mockTasks);
 
-    store.saveTaskAction(task);
-
-    const result = store.loadTasksAction();
-    expect(result).toEqual(signal([task]));
+    const result: WritableSignal<ITask[]> = store.loadTasksAction();
+    expect(result()).toEqual([mockTasks]);
   });
 
   it('[updateTaskAction] should update a task correctly with updateTaskAction', () => {
@@ -54,8 +52,8 @@ describe('TaskStore', () => {
     store.setTasksAction([initialTask]);
     store.updateTaskAction(updatedTask);
 
-    const result = store.loadTasksAction();
-    expect(result).toEqual(signal([updatedTask]));
+    const result: WritableSignal<ITask[]> = store.loadTasksAction();
+    expect(result()).toEqual([updatedTask]);
   });
 
   it('[deleteTaskAction] should delete a task correctly with deleteTaskAction', () => {
@@ -65,20 +63,18 @@ describe('TaskStore', () => {
     store.setTasksAction([task1, task2]);
     store.deleteTaskAction('1');
 
-    const result = store.loadTasksAction();
-    expect(result).toEqual(signal([task2]));
+    const result: WritableSignal<ITask[]> = store.loadTasksAction();
+    expect(result()).toEqual([task2]);
   });
 
   it('[loadTasksAction] should return the correct tasks with loadTasksAction', () => {
-    const tasks: ITask[] = [
+    const mockTasks: ITask[] = [
       { id: '1', title: 'Task 1', isCompleted: false },
       { id: '2', title: 'Task 2', isCompleted: true },
     ];
+    store.setTasksAction(mockTasks);
 
-    store.setTasksAction(tasks);
-
-    const result = store.loadTasksAction();
-    expect(result).toEqual(signal(tasks));
+    const result: WritableSignal<ITask[]> = store.loadTasksAction();
+    expect(result()).toEqual(mockTasks);
   });
 });
- */

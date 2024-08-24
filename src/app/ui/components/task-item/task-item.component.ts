@@ -9,7 +9,7 @@ import { ITask } from '@task:domain/models/task.model';
   standalone: true,
   imports: [],
   templateUrl: './task-item.component.html',
-  styleUrl: './task-item.component.scss'
+  styleUrl: './task-item.component.scss',
 })
 export class TaskItemComponent {
   task: InputSignal<ITask> = input.required<ITask>();
@@ -32,7 +32,9 @@ export class TaskItemComponent {
   }
 
   async deleteTask(): Promise<void> {
-    const response: unknown = await this.#deleteTaskUseCase.deleteTask(this.task().id);
+    const response: unknown = await this.#deleteTaskUseCase.deleteTask(
+      this.task().id
+    );
     if (response) {
       this.#taskStore.deleteTaskAction(this.task().id);
     }

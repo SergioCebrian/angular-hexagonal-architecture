@@ -1,9 +1,10 @@
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskItemComponent } from './task-item.component';
 import { ITask } from '@task:domain/models/task.model';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { TaskRepository } from '@task:domain/repositories/task-repository';
 
 describe('TaskItemComponent', () => {
   let component: TaskItemComponent;
@@ -13,7 +14,8 @@ describe('TaskItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskItemComponent]
+      imports: [TaskItemComponent],
+      providers: [TaskRepository],
     })
     .compileComponents();
     
@@ -34,9 +36,8 @@ describe('TaskItemComponent', () => {
     expect(component.task().isCompleted).toBeTrue();
   });
 
-  it('[Component: title] should display the correct task title in the template', () => {
+  it('[Property: title] should display the correct task title in the template', () => {
     const taskNameElement = debugElement.query(By.css('.task-title'));
     expect(taskNameElement?.nativeElement.textContent).toContain(mockTask.title);
   });
 });
- */
