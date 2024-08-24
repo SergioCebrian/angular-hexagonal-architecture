@@ -2,9 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { HttpService } from './http.service';
 import { provideHttpClient } from '@angular/common/http';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { environment } from '@env/environment';
-import { ITask } from '@task:domain/models/task';
+import { ITask } from '@task:domain/models/task.model';
 
 describe('HttpService', () => {
   let service: HttpService<unknown>;
@@ -16,10 +19,7 @@ describe('HttpService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting() 
-      ]
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     httpTesting = TestBed.inject(HttpTestingController);
     service = TestBed.inject(HttpService);
@@ -29,9 +29,12 @@ describe('HttpService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('[getAll] should return an array', async() => {
+  it('[getAll] should return an array', async () => {
     const getAllTasks: Promise<unknown[]> = service.getAll(apiUrlMock);
-    const req = httpTesting.expectOne(`${apiUrl}/${apiUrlMock}`, 'Request to load all tasks');
+    const req = httpTesting.expectOne(
+      `${apiUrl}/${apiUrlMock}`,
+      'Request to load all tasks'
+    );
 
     expect(req.request.method).toBe('GET');
     req.flush([mockTask]);
@@ -39,43 +42,55 @@ describe('HttpService', () => {
     httpTesting.verify();
   });
 
-  it('[getOne] should return an object', async() => {
+  it('[getOne] should return an object', async () => {
     const getOneTask = service.getOne(`${apiUrlMock}/1`);
-    const req = httpTesting.expectOne(`${apiUrl}/${apiUrlMock}/1`, 'Request a task');
-    
+    const req = httpTesting.expectOne(
+      `${apiUrl}/${apiUrlMock}/1`,
+      'Request a task'
+    );
+
     expect(req.request.method).toBe('GET');
     req.flush(mockTask);
     expect(await getOneTask).toEqual(mockTask);
     httpTesting.verify();
   });
 
-  it('[create] should return a new object', async() => {
+  it('[create] should return a new object', async () => {
     const createTask = service.create(apiUrlMock, mockTask);
-    const req = httpTesting.expectOne(`${apiUrl}/${apiUrlMock}`, 'Create a new task');
-    
+    const req = httpTesting.expectOne(
+      `${apiUrl}/${apiUrlMock}`,
+      'Create a new task'
+    );
+
     expect(req.request.method).toBe('POST');
     req.flush(mockTask);
     expect(await createTask).toEqual(mockTask);
     httpTesting.verify();
   });
 
-  it('[update] should update an object', async() => {
+  it('[update] should update an object', async () => {
     const updateTask = service.update(`${apiUrlMock}/1`, mockTask);
-    const req = httpTesting.expectOne(`${apiUrl}/${apiUrlMock}/1`, 'Update a task');
-    
+    const req = httpTesting.expectOne(
+      `${apiUrl}/${apiUrlMock}/1`,
+      'Update a task'
+    );
+
     expect(req.request.method).toBe('PUT');
     req.flush(mockTask);
     expect(await updateTask).toEqual(mockTask);
     httpTesting.verify();
   });
 
-  it('[delete] should delete an object', async() => {
+  it('[delete] should delete an object', async () => {
     const deleteTask = service.delete(`${apiUrlMock}/1`);
-    const req = httpTesting.expectOne(`${apiUrl}/${apiUrlMock}/1`, 'Delete a task');
-    
+    const req = httpTesting.expectOne(
+      `${apiUrl}/${apiUrlMock}/1`,
+      'Delete a task'
+    );
+
     expect(req.request.method).toBe('DELETE');
     req.flush(mockTask);
-    expect(await deleteTask).toEqual(undefined);
+    expect(await deleteTask).toEqual(mockTask);
     httpTesting.verify();
   });
 });

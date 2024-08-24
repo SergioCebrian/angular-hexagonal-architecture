@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { ITask } from '@task:domain/models/task';
+import { ITask } from '@task:domain/models/task.model';
 import { TaskCreateFormComponent } from '@components/task-create-form/task-create-form.component';
 import { TaskItemComponent } from '@components/task-item/task-item.component';
 import { GetTasksUseCase } from '@task:application/usecases/get-tasks-usecase/get-tasks-usecase';

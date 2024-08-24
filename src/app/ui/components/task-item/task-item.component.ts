@@ -2,7 +2,7 @@ import { Component, inject, input, InputSignal } from '@angular/core';
 import { TaskStore } from '@task:application/store/task-store';
 import { DeleteTaskUseCase } from '@task:application/usecases/delete-task-usecase/delete-task-usecase';
 import { UpdateTaskUseCase } from '@task:application/usecases/update-task-usecase/update-task-usecase';
-import { ITask } from '@task:domain/models/task';
+import { ITask } from '@task:domain/models/task.model';
 
 @Component({
   selector: 'app-task-item',

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpService } from '@infra/http/http.service';
-import { ITask } from '@task:domain/models/task';
+import { ITask } from '@task:domain/models/task.model';
 import { TaskRepository } from '@task:domain/repositories/task-repository';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class TaskService implements TaskRepository {
     return await this.#httpService.create(this.#apiUrl, task); 
   }
 
-  async updateTask(task: ITask): Promise<void> {
+  async updateTask(task: ITask): Promise<ITask> {
     const taskUrl = `${ this.#apiUrl }/${ task.id }`;
     return await this.#httpService.update(taskUrl, task);
   }

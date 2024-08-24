@@ -1,6 +1,6 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
-import { ITask } from '@task:domain/models/task';
-import { TaskStoreInterface } from '@task:application/interfaces/task-store';
+import { ITask } from '@task:domain/models/task.model';
+import { TaskStoreInterface } from '@task:application/store/task-store.interface';
 
 @Injectable({
   providedIn: 'root',

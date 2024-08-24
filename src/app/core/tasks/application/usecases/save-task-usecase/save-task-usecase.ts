@@ -1,14 +1,14 @@
-import { inject, Injectable } from "@angular/core";
-import { ITask } from "@task:domain/models/task";
-import { TaskRepository } from "@task:domain/repositories/task-repository";
+import { inject, Injectable } from '@angular/core';
+import { ITask } from '@task:domain/models/task.model';
+import { TaskRepository } from '@task:domain/repositories/task-repository';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class SaveTaskUseCase {
-    readonly #taskRepository = inject(TaskRepository);
+  readonly #taskRepository = inject(TaskRepository);
 
-    async saveTask(task: ITask): Promise<ITask> {
-        return await this.#taskRepository.saveTask(task); 
-    }
+  async saveTask(task: ITask): Promise<ITask> {
+    return await this.#taskRepository.saveTask(task);
+  }
 }

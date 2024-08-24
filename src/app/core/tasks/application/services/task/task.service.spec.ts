@@ -4,7 +4,7 @@ import { TaskService } from './task.service';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { HttpService } from '@infra/http/http.service';
-import { ITask } from '@task:domain/models/task';
+import { ITask } from '@task:domain/models/task.model';
 
 describe('TaskService', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -57,15 +57,14 @@ describe('TaskService', () => {
 
   it('[updateTask] should update a task', async() => {
     httpServiceSpy.update.and.returnValue(Promise.resolve(mockTask));
-    const result: void = await service.updateTask(mockTask);
-    expect(result).toEqual(undefined);
+    const result = await service.updateTask(mockTask);
+    expect(result).toEqual(mockTask);
     expect(httpServiceSpy.update).toHaveBeenCalledWith(`${apiUrlMock}/1`, mockTask);
   });
 
   it('[deleteTask] should delete a task', async() => {
     httpServiceSpy.delete.and.returnValue(Promise.resolve());
-    const result: void = await service.deleteTask('1');
-    expect(result).toEqual(undefined);
+    await service.deleteTask('1');
     expect(httpServiceSpy.delete).toHaveBeenCalledWith(`${apiUrlMock}/1`);
   });
 });

@@ -31,8 +31,8 @@ export class HttpService<T> {
     return await firstValueFrom(http$);
   }
 
-  async delete(url: string): Promise<void> {
-    const http$: Observable<void> = this.#http.delete<void>(`${ this.#apiUrl }/${ url }`);
+  async delete(url: string): Promise<T> {
+    const http$: Observable<T> = this.#http.delete<T>(`${ this.#apiUrl }/${ url }`);
     return await firstValueFrom(http$);
   }
 }

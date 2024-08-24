@@ -1,5 +1,5 @@
 import { WritableSignal } from "@angular/core";
-import { ITask } from "@task:domain/models/task";
+import { ITask } from '@task:domain/models/task.model';
 
 export interface TaskStoreInterface {
     deleteTaskAction(id: string): void;
