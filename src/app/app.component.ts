@@ -10,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
 import { ITask } from '@task:domain/models/task.model';
 import { TaskCreateFormComponent } from '@components/task-create-form/task-create-form.component';
 import { TaskItemComponent } from '@components/task-item/task-item.component';
-import { GetTasksUseCase } from '@task:application/usecases/get-tasks-usecase/get-tasks-usecase';
+import { GetTasks } from '@task:application/usecases/get-tasks/get-tasks';
 import { TaskStore } from '@task:application/store/task-store';
 
 @Component({
@@ -27,7 +27,7 @@ import { TaskStore } from '@task:application/store/task-store';
 })
 export class AppComponent implements OnInit {
   tasks: WritableSignal<ITask[]> = signal<ITask[]>([]);
-  readonly #getTasksUseCase = inject(GetTasksUseCase);
+  readonly #getTasks = inject(GetTasks);
   readonly #taskStore = inject(TaskStore);
 
   async ngOnInit(): Promise<void> {
@@ -36,6 +36,6 @@ export class AppComponent implements OnInit {
   }
 
   async #loadTasks(): Promise<ITask[]> {
-    return await this.#getTasksUseCase.getTasks();
+    return await this.#getTasks.getTasks();
   }
 }

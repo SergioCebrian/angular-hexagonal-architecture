@@ -1,4 +1,4 @@
-import { Component, inject, input, InputSignal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TaskStore } from '@task:application/store/task-store';
-import { SaveTaskUseCase } from '@task:application/usecases/save-task-usecase/save-task-usecase';
+import { CreateTask } from '@task:application/usecases/create-task/create-task';
 import { ITask } from '@task:domain/models/task.model';
 
 @Component({
@@ -17,8 +17,7 @@ import { ITask } from '@task:domain/models/task.model';
   styleUrl: './task-create-form.component.scss',
 })
 export class TaskCreateFormComponent {
-  total: InputSignal<number> = input<number>(0);
-  readonly #saveTaskUseCase = inject(SaveTaskUseCase);
+  readonly #createTask = inject(CreateTask);
   readonly #taskStore = inject(TaskStore);
 
   createTaskForm = new FormGroup({
@@ -29,17 +28,17 @@ export class TaskCreateFormComponent {
     ]),
   });
 
-  async saveTask(): Promise<void> {
+  async createTask(): Promise<void> {
     if (this.createTaskForm.valid) {
-      const newId = this.total() + 1;
+      const newId = crypto.randomUUID();
       const newTask: ITask = {
-        id: newId.toString(),
+        id: newId,
         title: this.createTaskForm.value.title as string,
         isCompleted: false,
       };
-      const response: ITask = await this.#saveTaskUseCase.saveTask(newTask);
+      const response: ITask = await this.#createTask.createTask(newTask);
       if (response) {
-        this.#taskStore.saveTaskAction(newTask);
+        this.#taskStore.createTaskAction(newTask);
       }
       this.createTaskForm.reset();
     }

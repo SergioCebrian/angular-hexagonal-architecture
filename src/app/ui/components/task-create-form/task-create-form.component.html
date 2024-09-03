@@ -1,4 +1,4 @@
-<form [formGroup]="createTaskForm" (ngSubmit)="saveTask()">
+<form [formGroup]="createTaskForm" (ngSubmit)="createTask()">
     <label for="title">Task: </label>
     <input id="title" type="text" formControlName="title" min="4" maxlength="30" placeholder="Type the task title and press enter">
 </form>

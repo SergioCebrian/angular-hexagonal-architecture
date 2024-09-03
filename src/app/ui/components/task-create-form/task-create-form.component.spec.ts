@@ -1,34 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskCreateFormComponent } from './task-create-form.component';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
-import { SaveTaskUseCase } from '@task:application/usecases/save-task-usecase/save-task-usecase';
+import { CreateTask } from '@task:application/s/create-task-/create-task-';
 import { TaskStore } from '@task:application/store/task-store';
 import { ITask } from '@task:domain/models/task.model';
 
 describe('TaskCreateFormComponent', () => {
   let component: TaskCreateFormComponent;
   let fixture: ComponentFixture<TaskCreateFormComponent>;
-  let saveTaskUseCaseSpy: jasmine.SpyObj<SaveTaskUseCase>;
+  let createTaskSpy: jasmine.SpyObj<CreateTask>;
   let taskStoreSpy: jasmine.SpyObj<TaskStore>;
 
   beforeEach(async () => {
-    const saveTaskSpy = jasmine.createSpyObj('SaveTaskUseCase', ['saveTask']);
-    const storeSpy = jasmine.createSpyObj('TaskStore', ['saveTaskAction']);
+    const createTaskSpy = jasmine.createSpyObj('CreateTask', ['createTask']);
+    const storeSpy = jasmine.createSpyObj('TaskStore', ['createTaskAction']);
 
     await TestBed.configureTestingModule({
       declarations: [],
       imports: [ReactiveFormsModule],
       providers: [
-        { provide: SaveTaskUseCase, useValue: saveTaskSpy },
+        { provide: CreateTask, useValue: createTaskSpy },
         { provide: TaskStore, useValue: storeSpy },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskCreateFormComponent);
     component = fixture.componentInstance;
-    saveTaskUseCaseSpy = TestBed.inject(
-      SaveTaskUseCase
-    ) as jasmine.SpyObj<SaveTaskUseCase>;
+    createTaskSpy = TestBed.inject(
+      CreateTask
+    ) as jasmine.SpyObj<CreateTask>;
     taskStoreSpy = TestBed.inject(TaskStore) as jasmine.SpyObj<TaskStore>;
 
     fixture.detectChanges();
@@ -51,35 +51,33 @@ describe('TaskCreateFormComponent', () => {
     expect(titleControl?.valid).toBeTrue();
   });
 
-  it('[saveTask] should call saveTaskUseCase.saveTask and taskStore.saveTaskAction when form is valid', async () => {
+  it('[createTask] should call createTask.createTask and taskStore.createTaskAction when form is valid', async () => {
+    const id = crypto.randomUUID();
     const newTask: ITask = {
-      id: '1',
+      id,
       title: 'New Task',
       isCompleted: false,
     };
 
     component.createTaskForm.setValue({ title: 'New Task' });
-    fixture.componentRef.setInput('total', 0);
+    createTaskSpy.createTask.and.returnValue(Promise.resolve(newTask));
+    await component.createTask();
 
-    saveTaskUseCaseSpy.saveTask.and.returnValue(Promise.resolve(newTask));
-
-    await component.saveTask();
-
-    expect(saveTaskUseCaseSpy.saveTask).toHaveBeenCalledWith({
-      id: '1',
+    expect(createTaskSpy.createTask).toHaveBeenCalledWith({
+      id,
       title: 'New Task',
       isCompleted: false,
     });
-    expect(taskStoreSpy.saveTaskAction).toHaveBeenCalledWith(newTask);
+    expect(taskStoreSpy.createTaskAction).toHaveBeenCalledWith(newTask);
     expect(component.createTaskForm.value).toEqual({ title: null });
   });
 
-  it('[saveTask] should not call saveTaskUseCase.saveTask or taskStore.saveTaskAction when form is invalid', async () => {
+  it('[createTask] should not call createTask.createTask or taskStore.createTaskAction when form is invalid', async () => {
     component.createTaskForm.setValue({ title: '' }); // Invalid form
 
-    await component.saveTask();
+    await component.createTask();
 
-    expect(saveTaskUseCaseSpy.saveTask).not.toHaveBeenCalled();
-    expect(taskStoreSpy.saveTaskAction).not.toHaveBeenCalled();
+    expect(createTaskSpy.createTask).not.toHaveBeenCalled();
+    expect(taskStoreSpy.createTaskAction).not.toHaveBeenCalled();
   });
 });

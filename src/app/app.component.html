@@ -1,5 +1,5 @@
 <main>
-  <app-task-create-form [total]="tasks().length" />
+  <app-task-create-form />
   @if (tasks().length > 0) {
     <ul>
       @for (task of tasks(); track task.id) {

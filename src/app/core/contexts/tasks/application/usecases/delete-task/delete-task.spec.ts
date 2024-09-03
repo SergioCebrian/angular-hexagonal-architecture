@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { TaskRepository } from '@task:domain/repositories/task-repository';
-import { DeleteTaskUseCase } from './delete-task-usecase';
+import { DeleteTask } from './delete-task';
 
-describe('DeleteTaskUseCase', () => {
-  let deleteTaskUseCase: DeleteTaskUseCase;
+describe('DeleteTask', () => {
+  let deleteTask: DeleteTask;
   let taskRepositorySpy: jasmine.SpyObj<TaskRepository>;
 
   beforeEach(() => {
@@ -11,25 +11,25 @@ describe('DeleteTaskUseCase', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        DeleteTaskUseCase,
+        DeleteTask,
         { provide: TaskRepository, useValue: spy },
       ],
     });
 
-    deleteTaskUseCase = TestBed.inject(DeleteTaskUseCase);
+    deleteTask = TestBed.inject(DeleteTask);
     taskRepositorySpy = TestBed.inject(
       TaskRepository
     ) as jasmine.SpyObj<TaskRepository>;
   });
 
   it('should be created', () => {
-    expect(deleteTaskUseCase).toBeTruthy();
+    expect(deleteTask).toBeTruthy();
   });
 
   it('[deleteTask] should delete a task and not return anything', async () => {
     const taskId = '1';
     taskRepositorySpy.deleteTask.and.returnValue(Promise.resolve());
-    await deleteTaskUseCase.deleteTask(taskId);
+    await deleteTask.deleteTask(taskId);
     expect(taskRepositorySpy.deleteTask).toHaveBeenCalledTimes(1);
     expect(taskRepositorySpy.deleteTask).toHaveBeenCalledWith(taskId);
   });

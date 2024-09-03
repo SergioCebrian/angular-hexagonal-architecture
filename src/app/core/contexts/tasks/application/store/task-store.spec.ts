@@ -29,9 +29,9 @@ describe('TaskStore', () => {
     expect(result()).toEqual(mockTasks);
   });
 
-  it('[saveTaskAction] should add a task correctly with saveTaskAction', () => {
+  it('[createTaskAction] should add a task correctly with createTaskAction', () => {
     const mockTasks: ITask = { id: '1', title: 'New Task', isCompleted: false };
-    store.saveTaskAction(mockTasks);
+    store.createTaskAction(mockTasks);
 
     const result: WritableSignal<ITask[]> = store.loadTasksAction();
     expect(result()).toEqual([mockTasks]);

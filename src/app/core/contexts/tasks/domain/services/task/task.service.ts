@@ -20,7 +20,7 @@ export class TaskService implements TaskRepository {
     return await this.#httpService.getOne(taskUrl); 
   }
 
-  async saveTask(task: ITask): Promise<ITask> {
+  async createTask(task: ITask): Promise<ITask> {
     return await this.#httpService.create(this.#apiUrl, task); 
   }
 

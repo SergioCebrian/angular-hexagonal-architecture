@@ -4,7 +4,7 @@ import { TaskRepository } from '@task:domain/repositories/task-repository';
 @Injectable({
   providedIn: 'root',
 })
-export class DeleteTaskUseCase {
+export class DeleteTask {
   readonly #taskRepository = inject(TaskRepository);
 
   async deleteTask(id: string): Promise<void> {

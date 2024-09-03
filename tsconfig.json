@@ -28,8 +28,8 @@
       "@config/*": ["src/app/config/*"],
       "@env/*": ["src/environments/*"],
       "@infra/*": ["src/app/core/infrastructure/*"],
-      "@task:domain/*": ["src/app/core/tasks/domain/*"],
-      "@task:application/*": ["src/app/core/tasks/application/*"],
+      "@task:domain/*": ["src/app/core/contexts/tasks/domain/*"],
+      "@task:application/*": ["src/app/core/contexts/tasks/application/*"],
       "@components/*": ["src/app/ui/components/*"]
     }
   },

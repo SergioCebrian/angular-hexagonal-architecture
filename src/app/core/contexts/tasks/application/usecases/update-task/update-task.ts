@@ -5,7 +5,7 @@ import { TaskRepository } from '@task:domain/repositories/task-repository';
 @Injectable({
   providedIn: 'root',
 })
-export class UpdateTaskUseCase {
+export class UpdateTask {
   readonly #taskRepository = inject(TaskRepository);
 
   async updateTask(task: ITask): Promise<ITask> {

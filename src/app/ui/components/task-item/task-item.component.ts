@@ -1,7 +1,7 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
 import { TaskStore } from '@task:application/store/task-store';
-import { DeleteTaskUseCase } from '@task:application/usecases/delete-task-usecase/delete-task-usecase';
-import { UpdateTaskUseCase } from '@task:application/usecases/update-task-usecase/update-task-usecase';
+import { DeleteTask } from '@task:application/usecases/delete-task/delete-task';
+import { UpdateTask } from '@task:application/usecases/update-task/update-task';
 import { ITask } from '@task:domain/models/task.model';
 
 @Component({
@@ -13,8 +13,8 @@ import { ITask } from '@task:domain/models/task.model';
 })
 export class TaskItemComponent {
   task: InputSignal<ITask> = input.required<ITask>();
-  readonly #deleteTaskUseCase = inject(DeleteTaskUseCase);
-  readonly #updateTaskUseCase = inject(UpdateTaskUseCase);
+  readonly #deleteTask = inject(DeleteTask);
+  readonly #updateTask = inject(UpdateTask);
   readonly #taskStore = inject(TaskStore);
 
   #toggleCompletedStatus(event: Event): ITask {
@@ -24,15 +24,15 @@ export class TaskItemComponent {
     return task;
   }
 
-  async #updateTask(task: ITask): Promise<void> {
-    const response: unknown = await this.#updateTaskUseCase.updateTask(task);
+  async #doUpdateTask(task: ITask): Promise<void> {
+    const response: unknown = await this.#updateTask.updateTask(task);
     if (response) {
       this.#taskStore.updateTaskAction(task);
     }
   }
 
-  async deleteTask(): Promise<void> {
-    const response: unknown = await this.#deleteTaskUseCase.deleteTask(
+  async doDeleteTask(): Promise<void> {
+    const response: unknown = await this.#deleteTask.deleteTask(
       this.task().id
     );
     if (response) {
@@ -42,6 +42,6 @@ export class TaskItemComponent {
 
   async onCheckboxChange(event: Event): Promise<void> {
     const task = this.#toggleCompletedStatus(event);
-    await this.#updateTask(task);
+    await this.#doUpdateTask(task);
   }
 }

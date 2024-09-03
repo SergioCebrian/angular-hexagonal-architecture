@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { TaskItemComponent } from './task-item.component';
 import { TaskStore } from '@task:application/store/task-store';
-import { DeleteTaskUseCase } from '@task:application/usecases/delete-task-usecase/delete-task-usecase';
-import { UpdateTaskUseCase } from '@task:application/usecases/update-task-usecase/update-task-usecase';
+import { DeleteTask } from '@task:application/s/delete-task-/delete-task-';
+import { UpdateTask } from '@task:application/s/update-task-/update-task-';
 import { ITask } from '@task:domain/models/task.model';
 import { By } from '@angular/platform-browser';
 
@@ -18,10 +18,10 @@ describe('TaskItemComponent', () => {
   let fixture: ComponentFixture<TaskItemComponent>;
 
   beforeEach(async () => {
-    const deleteTaskSpy = jasmine.createSpyObj('DeleteTaskUseCase', [
+    const deleteTaskSpy = jasmine.createSpyObj('DeleteTask', [
       'deleteTask',
     ]);
-    const updateTaskSpy = jasmine.createSpyObj('UpdateTaskUseCase', [
+    const updateTaskSpy = jasmine.createSpyObj('UpdateTask', [
       'updateTask',
     ]);
     const storeSpy = jasmine.createSpyObj('TaskStore', [
@@ -32,8 +32,8 @@ describe('TaskItemComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [],
       providers: [
-        { provide: DeleteTaskUseCase, useValue: deleteTaskSpy },
-        { provide: UpdateTaskUseCase, useValue: updateTaskSpy },
+        { provide: DeleteTask, useValue: deleteTaskSpy },
+        { provide: UpdateTask, useValue: updateTaskSpy },
         { provide: TaskStore, useValue: storeSpy },
       ],
     }).compileComponents();

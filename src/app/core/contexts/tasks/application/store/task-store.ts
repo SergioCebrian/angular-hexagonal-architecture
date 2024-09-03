@@ -18,7 +18,7 @@ export class TaskStore implements TaskStoreInterface {
     return this.#tasks;
   }
 
-  saveTaskAction(task: ITask): void {
+  createTaskAction(task: ITask): void {
     this.#tasks.update((tasks: ITask[]) => [...tasks, task]);
   }
 

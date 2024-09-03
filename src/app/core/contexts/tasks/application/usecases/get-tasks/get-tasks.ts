@@ -5,14 +5,10 @@ import { TaskRepository } from '@task:domain/repositories/task-repository';
 @Injectable({
   providedIn: 'root',
 })
-export class GetTasksUseCase {
+export class GetTasks {
   readonly #taskRepository = inject(TaskRepository);
 
   async getTasks(): Promise<ITask[]> {
     return await this.#taskRepository.getTasks();
-  }
-
-  async getTask(id: string): Promise<ITask> {
-    return await this.#taskRepository.getTask(id);
   }
 }

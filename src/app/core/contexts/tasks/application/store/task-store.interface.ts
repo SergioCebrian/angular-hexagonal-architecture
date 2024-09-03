@@ -4,7 +4,7 @@ import { ITask } from '@task:domain/models/task.model';
 export interface TaskStoreInterface {
     deleteTaskAction(id: string): void;
     loadTasksAction(): WritableSignal<ITask[]>;
-    saveTaskAction(task: ITask): void;
+    createTaskAction(task: ITask): void;
     setTasksAction(tasks: ITask[]): void;
     updateTaskAction(task: ITask): void;
 }

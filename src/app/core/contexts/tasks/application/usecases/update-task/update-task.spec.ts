@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { TaskRepository } from '@task:domain/repositories/task-repository';
 import { ITask } from '@task:domain/models/task.model';
-import { UpdateTaskUseCase } from './update-task-usecase';
+import { UpdateTask } from './update-task';
 
-describe('UpdateTaskUseCase', () => {
-  let updateTaskUseCase: UpdateTaskUseCase;
+describe('UpdateTask', () => {
+  let updateTask: UpdateTask;
   let taskRepositorySpy: jasmine.SpyObj<TaskRepository>;
 
   beforeEach(() => {
@@ -12,19 +12,19 @@ describe('UpdateTaskUseCase', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        UpdateTaskUseCase,
+        UpdateTask,
         { provide: TaskRepository, useValue: spy },
       ],
     });
 
-    updateTaskUseCase = TestBed.inject(UpdateTaskUseCase);
+    updateTask = TestBed.inject(UpdateTask);
     taskRepositorySpy = TestBed.inject(
       TaskRepository
     ) as jasmine.SpyObj<TaskRepository>;
   });
 
   it('should be created', () => {
-    expect(updateTaskUseCase).toBeTruthy();
+    expect(updateTask).toBeTruthy();
   });
 
   it('[updateTask] should update a task and return the updated task', async () => {
@@ -37,7 +37,7 @@ describe('UpdateTaskUseCase', () => {
 
     taskRepositorySpy.updateTask.and.returnValue(Promise.resolve(updatedTask));
 
-    const result = await updateTaskUseCase.updateTask(taskToUpdate);
+    const result = await updateTask.updateTask(taskToUpdate);
     expect(result).toEqual(updatedTask);
     expect(taskRepositorySpy.updateTask).toHaveBeenCalledTimes(1);
     expect(taskRepositorySpy.updateTask).toHaveBeenCalledWith(taskToUpdate);
