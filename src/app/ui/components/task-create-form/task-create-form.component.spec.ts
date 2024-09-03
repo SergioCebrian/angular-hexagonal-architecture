@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskCreateFormComponent } from './task-create-form.component';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
-import { CreateTask } from '@task:application/s/create-task-/create-task-';
+import { CreateTask } from '@task:application/usecases/create-task/create-task';
 import { TaskStore } from '@task:application/store/task-store';
 import { ITask } from '@task:domain/models/task.model';
 
@@ -12,7 +12,7 @@ describe('TaskCreateFormComponent', () => {
   let taskStoreSpy: jasmine.SpyObj<TaskStore>;
 
   beforeEach(async () => {
-    const createTaskSpy = jasmine.createSpyObj('CreateTask', ['createTask']);
+    createTaskSpy = jasmine.createSpyObj('CreateTask', ['createTask']);
     const storeSpy = jasmine.createSpyObj('TaskStore', ['createTaskAction']);
 
     await TestBed.configureTestingModule({
