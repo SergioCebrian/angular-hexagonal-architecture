@@ -30,6 +30,7 @@
       "@infra/*": ["src/app/core/infrastructure/*"],
       "@task:domain/*": ["src/app/core/contexts/tasks/domain/*"],
       "@task:application/*": ["src/app/core/contexts/tasks/application/*"],
+      "@task:infra/*": ["src/app/core/contexts/tasks/infrastructure/*"],
       "@components/*": ["src/app/ui/components/*"]
     }
   },

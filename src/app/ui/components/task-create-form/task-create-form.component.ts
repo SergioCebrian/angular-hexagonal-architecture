@@ -5,9 +5,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TaskStore } from '@task:application/store/task-store';
+import { TaskStore } from '@task:infra/store/task-store';
 import { CreateTask } from '@task:application/usecases/create-task/create-task';
 import { ITask } from '@task:domain/models/task.model';
+import { taskValidation } from '@task:application/validations/task-validation';
 
 @Component({
   selector: 'app-task-create-form',
@@ -36,6 +37,7 @@ export class TaskCreateFormComponent {
         title: this.createTaskForm.value.title as string,
         isCompleted: false,
       };
+      taskValidation(newTask);
       const response: ITask = await this.#createTask.createTask(newTask);
       if (response) {
         this.#taskStore.createTaskAction(newTask);

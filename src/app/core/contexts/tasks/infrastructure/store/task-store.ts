@@ -1,6 +1,6 @@
 import { Injectable, signal, WritableSignal, inject } from '@angular/core';
 import { ITask } from '@task:domain/models/task.model';
-import { ITaskStore } from '@task:application/store/task-store.interface';
+import { ITaskStore } from '@task:infra/store/task-store.interface';
 import { StoreService } from '@infra/store/store.service';
 import { IStore } from '@infra/store/store.interface';
 

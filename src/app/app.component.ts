@@ -11,7 +11,7 @@ import { ITask } from '@task:domain/models/task.model';
 import { TaskCreateFormComponent } from '@components/task-create-form/task-create-form.component';
 import { TaskItemComponent } from '@components/task-item/task-item.component';
 import { GetTasks } from '@task:application/usecases/get-tasks/get-tasks';
-import { TaskStore } from '@task:application/store/task-store';
+import { TaskStore } from '@task:infra/store/task-store';
 
 @Component({
   selector: 'app-root',

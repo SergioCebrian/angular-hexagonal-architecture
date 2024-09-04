@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskCreateFormComponent } from './task-create-form.component';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { CreateTask } from '@task:application/usecases/create-task/create-task';
-import { TaskStore } from '@task:application/store/task-store';
+import { TaskStore } from '@task:infra/store/task-store';
 import { ITask } from '@task:domain/models/task.model';
 
 describe('TaskCreateFormComponent', () => {

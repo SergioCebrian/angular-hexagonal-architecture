@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { GetTasks } from '@task:application/usecases/get-tasks/get-tasks';
-import { TaskStore } from '@task:application/store/task-store';
+import { TaskStore } from '@task:infra/store/task-store';
 import { ITask } from '@task:domain/models/task.model';
 import { signal } from '@angular/core';
 import { TaskRepository } from '@task:domain/repositories/task-repository';
