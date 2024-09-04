@@ -8,26 +8,26 @@ import { IStore } from '@infra/store/store.interface';
   providedIn: 'root',
 })
 export class TaskStore implements ITaskStore {
-  #store: IStore<ITask> = inject(StoreService);
+  #storeService: IStore<ITask> = inject(StoreService);
   #tasks: WritableSignal<ITask[]> = signal<ITask[]>([]);
 
   deleteTaskAction(id: string): void {
-    return this.#store.deleteAction(this.#tasks, id);
+    return this.#storeService.deleteAction(this.#tasks, id);
   }
 
   loadTasksAction(): WritableSignal<ITask[]> {
-    return this.#store.loadAction(this.#tasks);
+    return this.#storeService.loadAction(this.#tasks);
   }
 
   createTaskAction(task: ITask): void {
-    return this.#store.createAction(this.#tasks, task);
+    return this.#storeService.createAction(this.#tasks, task);
   }
 
   setTasksAction(tasks: ITask[]): void {
-    return this.#store.setAction(this.#tasks, tasks);
+    return this.#storeService.setAction(this.#tasks, tasks);
   }
 
   updateTaskAction(task: ITask): void {
-    return this.#store.updateAction(this.#tasks, task);
+    return this.#storeService.updateAction(this.#tasks, task);
   }
 }
