@@ -26,9 +26,7 @@ describe('TaskCreateFormComponent', () => {
 
     fixture = TestBed.createComponent(TaskCreateFormComponent);
     component = fixture.componentInstance;
-    createTaskSpy = TestBed.inject(
-      CreateTask
-    ) as jasmine.SpyObj<CreateTask>;
+    createTaskSpy = TestBed.inject(CreateTask) as jasmine.SpyObj<CreateTask>;
     taskStoreSpy = TestBed.inject(TaskStore) as jasmine.SpyObj<TaskStore>;
 
     fixture.detectChanges();
@@ -44,7 +42,7 @@ describe('TaskCreateFormComponent', () => {
 
   it('[Form: validate] should require title to be valid', () => {
     const titleControl: AbstractControl<string | null, string | null> | null =
-    component.createTaskForm.get('title');
+      component.createTaskForm.get('title');
     titleControl?.setValue('A');
     expect(titleControl?.valid).toBeFalse();
     titleControl?.setValue('Valid Title');
