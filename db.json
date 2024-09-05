@@ -1,54 +1,29 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Task 1",
+      "id": "6490f57f-aa3e-4be0-bd30-92377ce91a4f",
+      "title": "Important task",
       "isCompleted": false
     },
     {
-      "id": "2",
-      "title": "Task 2",
+      "id": "c0a9d9e3-1534-452e-bfa7-165e7c3a960c",
+      "title": "Sample task",
       "isCompleted": false
     },
     {
-      "id": "3",
-      "title": "Task 3",
+      "id": "616d09a5-d07e-43b8-8237-57355d2680b9",
+      "title": "New task",
       "isCompleted": false
     },
     {
-      "id": "4",
-      "title": "Task 4",
-      "isCompleted": true
-    },
-    {
-      "id": "5",
-      "title": "Task 5",
+      "id": "d467dae3-51b5-4a7d-986f-4ed7cad24de3",
+      "title": "Today's task",
       "isCompleted": false
     },
     {
-      "id": "6",
-      "title": "Task 6",
+      "id": "95cdec1f-12ea-4e6d-b870-b0f312cb6071",
+      "title": "Urgent task",
       "isCompleted": false
-    },
-    {
-      "id": "7",
-      "title": "Task 7",
-      "isCompleted": false
-    },
-    {
-      "id": "8",
-      "title": "Task 8",
-      "isCompleted": false
-    },
-    {
-      "id": "9",
-      "title": "Task 9",
-      "isCompleted": false
-    },
-    {
-      "id": "10",
-      "title": "Task 10",
-      "isCompleted": true
     }
   ]
 }
