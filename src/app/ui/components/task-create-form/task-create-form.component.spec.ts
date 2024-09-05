@@ -50,7 +50,9 @@ describe('TaskCreateFormComponent', () => {
   });
 
   it('[createTask] should call createTask.createTask and taskStore.createTaskAction when form is valid', async () => {
-    const id = crypto.randomUUID();
+    const id = '5f4058d7-006e-4cee-895d-49ec658a20d6';
+    spyOn(crypto, 'randomUUID').and.returnValue(id); // Fix UUID
+
     const newTask: ITask = {
       id,
       title: 'New Task',
@@ -59,13 +61,10 @@ describe('TaskCreateFormComponent', () => {
 
     component.createTaskForm.setValue({ title: 'New Task' });
     createTaskSpy.createTask.and.returnValue(Promise.resolve(newTask));
+
     await component.createTask();
 
-    expect(createTaskSpy.createTask).toHaveBeenCalledWith({
-      id,
-      title: 'New Task',
-      isCompleted: false,
-    });
+    expect(createTaskSpy.createTask).toHaveBeenCalledWith(newTask);
     expect(taskStoreSpy.createTaskAction).toHaveBeenCalledWith(newTask);
     expect(component.createTaskForm.value).toEqual({ title: null });
   });
