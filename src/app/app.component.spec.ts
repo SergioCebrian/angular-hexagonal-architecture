@@ -1,10 +1,10 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { GetTasks } from '@task:application/get-tasks/get-tasks';
+import { GetTasks } from '@task:application/usecases/get-tasks/get-tasks';
 import { TaskStore } from '@task:infra/store/task-store';
 import { ITask } from '@task:domain/models/task.model';
 import { signal } from '@angular/core';
-import { TaskService } from '@task:domain/services/task/task.service';
+import { TaskService } from '@task:application/services/task/task.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;

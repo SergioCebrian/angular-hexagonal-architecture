@@ -10,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
 import { ITask } from '@task:domain/models/task.model';
 import { TaskCreateFormComponent } from '@components/task-create-form/task-create-form.component';
 import { TaskItemComponent } from '@components/task-item/task-item.component';
-import { GetTasks } from '@task:application/get-tasks/get-tasks';
+import { GetTasks } from '@task:application/usecases/get-tasks/get-tasks';
 import { TaskStore } from '@task:infra/store/task-store';
 
 @Component({

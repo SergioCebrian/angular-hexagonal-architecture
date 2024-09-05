@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { TaskService } from '@task:domain/services/task/task.service';
+import { TaskService } from '@task:application/services/task/task.service';
 import { DeleteTask } from './delete-task';
 
 describe('DeleteTask', () => {

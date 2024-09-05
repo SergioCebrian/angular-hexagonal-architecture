@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ITask } from '@task:domain/models/task.model';
 import { CreateTask } from './create-task';
-import { TaskService } from '@task:domain/services/task/task.service';
+import { TaskService } from '@task:application/services/task/task.service';
 
 describe('CreateTask', () => {
   let createTask: CreateTask;
