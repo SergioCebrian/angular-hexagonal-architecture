@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { TaskItemComponent } from './task-item.component';
 import { TaskStore } from '@task:infra/store/task-store';
-import { DeleteTask } from '@task:application/usecases/delete-task/delete-task';
-import { UpdateTask } from '@task:application/usecases/update-task/update-task';
+import { DeleteTask } from '@task:application/delete-task/delete-task';
+import { UpdateTask } from '@task:application/update-task/update-task';
 import { ITask } from '@task:domain/models/task.model';
 import { By } from '@angular/platform-browser';
 

@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TaskStore } from '@task:infra/store/task-store';
-import { CreateTask } from '@task:application/usecases/create-task/create-task';
+import { CreateTask } from '@task:application/create-task/create-task';
 import { ITask } from '@task:domain/models/task.model';
 
 @Component({

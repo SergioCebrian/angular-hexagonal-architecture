@@ -1,7 +1,7 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
 import { TaskStore } from '@task:infra/store/task-store';
-import { DeleteTask } from '@task:application/usecases/delete-task/delete-task';
-import { UpdateTask } from '@task:application/usecases/update-task/update-task';
+import { DeleteTask } from '@task:application/delete-task/delete-task';
+import { UpdateTask } from '@task:application/update-task/update-task';
 import { ITask } from '@task:domain/models/task.model';
 
 @Component({
