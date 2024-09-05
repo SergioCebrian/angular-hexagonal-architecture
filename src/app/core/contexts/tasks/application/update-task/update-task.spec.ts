@@ -1,26 +1,26 @@
 import { TestBed } from '@angular/core/testing';
-import { TaskRepository } from '@task:domain/repositories/task-repository';
+import { TaskService } from '@task:domain/services/task/task.service';
 import { ITask } from '@task:domain/models/task.model';
 import { UpdateTask } from './update-task';
 
 describe('UpdateTask', () => {
   let updateTask: UpdateTask;
-  let taskRepositorySpy: jasmine.SpyObj<TaskRepository>;
+  let taskServiceSpy: jasmine.SpyObj<TaskService>;
 
   beforeEach(() => {
-    const spy = jasmine.createSpyObj('TaskRepository', ['updateTask']);
+    const spy = jasmine.createSpyObj('TaskService', ['updateTask']);
 
     TestBed.configureTestingModule({
       providers: [
         UpdateTask,
-        { provide: TaskRepository, useValue: spy },
+        { provide: TaskService, useValue: spy },
       ],
     });
 
     updateTask = TestBed.inject(UpdateTask);
-    taskRepositorySpy = TestBed.inject(
-      TaskRepository
-    ) as jasmine.SpyObj<TaskRepository>;
+    taskServiceSpy = TestBed.inject(
+      TaskService
+    ) as jasmine.SpyObj<TaskService>;
   });
 
   it('should be created', () => {
@@ -35,11 +35,11 @@ describe('UpdateTask', () => {
     };
     const updatedTask: ITask = { ...taskToUpdate, isCompleted: true };
 
-    taskRepositorySpy.updateTask.and.returnValue(Promise.resolve(updatedTask));
+    taskServiceSpy.updateTask.and.returnValue(Promise.resolve(updatedTask));
 
     const result = await updateTask.updateTask(taskToUpdate);
     expect(result).toEqual(updatedTask);
-    expect(taskRepositorySpy.updateTask).toHaveBeenCalledTimes(1);
-    expect(taskRepositorySpy.updateTask).toHaveBeenCalledWith(taskToUpdate);
+    expect(taskServiceSpy.updateTask).toHaveBeenCalledTimes(1);
+    expect(taskServiceSpy.updateTask).toHaveBeenCalledWith(taskToUpdate);
   });
 });

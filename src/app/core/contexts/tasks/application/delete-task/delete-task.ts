@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
-import { TaskRepository } from '@task:domain/repositories/task-repository';
+import { TaskService } from '@task:domain/services/task/task.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeleteTask {
-  readonly #taskRepository = inject(TaskRepository);
+  readonly #taskService = inject(TaskService);
 
   async deleteTask(id: string): Promise<void> {
-    return await this.#taskRepository.deleteTask(id);
+    return await this.#taskService.deleteTask(id);
   }
 }

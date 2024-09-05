@@ -4,7 +4,7 @@ import { GetTasks } from '@task:application/get-tasks/get-tasks';
 import { TaskStore } from '@task:infra/store/task-store';
 import { ITask } from '@task:domain/models/task.model';
 import { signal } from '@angular/core';
-import { TaskRepository } from '@task:domain/repositories/task-repository';
+import { TaskService } from '@task:domain/services/task/task.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -22,7 +22,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [],
       providers: [
-        TaskRepository,
+        TaskService,
         { provide: GetTasks, useValue: getTasksSpy },
         { provide: TaskStore, useValue: storeSpy },
       ],
