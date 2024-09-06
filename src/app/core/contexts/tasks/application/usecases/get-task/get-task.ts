@@ -5,7 +5,7 @@ import { TaskService } from '@task:application/services/task/task.service';
 @Injectable({
   providedIn: 'root',
 })
-export class GetTasks {
+export class GetTask {
   readonly #taskService = inject(TaskService);
 
   async getTask(id: string): Promise<ITask> {
