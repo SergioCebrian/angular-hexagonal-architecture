@@ -34,7 +34,7 @@ describe('TaskStoreActions', () => {
   });
 
   it('[deleteTask] should call deleteTask on TaskStore', () => {
-    const id = 'c0a9d9e3-1534-452e-bfa7-165e7c3a960c'
+    const id = '1';
     service.deleteTask(id);
     expect(taskStore.deleteTask).toHaveBeenCalledWith(id);
   });
@@ -49,7 +49,7 @@ describe('TaskStoreActions', () => {
   });
 
   it('[getTask] should call getTask on TaskStore', () => {
-    const id = 'c0a9d9e3-1534-452e-bfa7-165e7c3a960c'
+    const id = '1';
     const mockTaskSignal = {} as Signal<ITask | undefined>;
     taskStore.getTask.and.returnValue(mockTaskSignal);
 
