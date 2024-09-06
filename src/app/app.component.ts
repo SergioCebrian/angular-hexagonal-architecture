@@ -11,7 +11,7 @@ import { ITask } from '@task:domain/models/task.model';
 import { TaskCreateFormComponent } from '@components/task-create-form/task-create-form.component';
 import { TaskItemComponent } from '@components/task-item/task-item.component';
 import { GetTasks } from '@task:application/usecases/get-tasks/get-tasks';
-import { TaskStore } from '@task:infra/store/task-store';
+import { TaskStoreActions } from '@task:application/store/task-store-actions';
 
 @Component({
   selector: 'app-root',
@@ -28,11 +28,11 @@ import { TaskStore } from '@task:infra/store/task-store';
 export class AppComponent implements OnInit {
   tasks: WritableSignal<ITask[]> = signal<ITask[]>([]);
   readonly #getTasks = inject(GetTasks);
-  readonly #taskStore = inject(TaskStore);
+  readonly #taskStore = inject(TaskStoreActions);
 
   async ngOnInit(): Promise<void> {
-    this.#taskStore.setTasksAction(await this.#loadTasks());
-    this.tasks = this.#taskStore.loadTasksAction();
+    this.#taskStore.setTasks(await this.#loadTasks());
+    this.tasks = this.#taskStore.getTasks();
   }
 
   async #loadTasks(): Promise<ITask[]> {

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { TaskItemComponent } from './task-item.component';
-import { TaskStore } from '@task:infra/store/task-store';
+import { TaskStoreActions } from '@task:application/store/task-store-actions';
 import { DeleteTask } from '@task:application/usecases/delete-task/delete-task';
 import { UpdateTask } from '@task:application/usecases/update-task/update-task';
 import { ITask } from '@task:domain/models/task.model';
@@ -24,7 +24,7 @@ describe('TaskItemComponent', () => {
     const updateTaskSpy = jasmine.createSpyObj('UpdateTask', [
       'updateTask',
     ]);
-    const storeSpy = jasmine.createSpyObj('TaskStore', [
+    const storeSpy = jasmine.createSpyObj('TaskStoreActions', [
       'updateTaskAction',
       'deleteTaskAction',
     ]);
@@ -34,7 +34,7 @@ describe('TaskItemComponent', () => {
       providers: [
         { provide: DeleteTask, useValue: deleteTaskSpy },
         { provide: UpdateTask, useValue: updateTaskSpy },
-        { provide: TaskStore, useValue: storeSpy },
+        { provide: TaskStoreActions, useValue: storeSpy },
       ],
     }).compileComponents();
 

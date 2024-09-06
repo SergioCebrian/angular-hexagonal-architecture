@@ -1,30 +1,34 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { GetTasks } from '@task:application/usecases/get-tasks/get-tasks';
-import { TaskStore } from '@task:infra/store/task-store';
+import { TaskStoreActions } from '@task:application/store/task-store-actions';
 import { ITask } from '@task:domain/models/task.model';
 import { signal } from '@angular/core';
 import { TaskService } from '@task:application/services/task/task.service';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let getTasksSpy: jasmine.SpyObj<GetTasks>;
-  let taskStoreSpy: jasmine.SpyObj<TaskStore>;
+  let taskStoreSpy: jasmine.SpyObj<TaskStoreActions>;
 
   beforeEach(async () => {
     getTasksSpy = jasmine.createSpyObj('GetTasks', ['getTasks']);
-    const storeSpy = jasmine.createSpyObj('TaskStore', [
-      'setTasksAction',
-      'loadTasksAction',
+    const storeSpy = jasmine.createSpyObj('TaskStoreActions', [
+      'setTasks',
+      'getTasks',
     ]);
 
     await TestBed.configureTestingModule({
       declarations: [],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         TaskService,
         { provide: GetTasks, useValue: getTasksSpy },
-        { provide: TaskStore, useValue: storeSpy },
+        { provide: TaskStoreActions, useValue: storeSpy },
       ],
     }).compileComponents();
 
@@ -33,7 +37,7 @@ describe('AppComponent', () => {
     getTasksSpy = TestBed.inject(
       GetTasks
     ) as jasmine.SpyObj<GetTasks>;
-    taskStoreSpy = TestBed.inject(TaskStore) as jasmine.SpyObj<TaskStore>;
+    taskStoreSpy = TestBed.inject(TaskStoreActions) as jasmine.SpyObj<TaskStoreActions>;
   });
 
   it('should create', () => {
@@ -47,13 +51,13 @@ describe('AppComponent', () => {
     ];
 
     getTasksSpy.getTasks.and.returnValue(Promise.resolve(mockTasks));
-    taskStoreSpy.loadTasksAction.and.returnValue(signal(mockTasks));
+    taskStoreSpy.getTasks.and.returnValue(signal(mockTasks));
 
     await component.ngOnInit();
 
     expect(getTasksSpy.getTasks).toHaveBeenCalled();
-    expect(taskStoreSpy.setTasksAction).toHaveBeenCalledWith(mockTasks);
-    expect(taskStoreSpy.loadTasksAction).toHaveBeenCalled();
+    expect(taskStoreSpy.setTasks).toHaveBeenCalledWith(mockTasks);
+    expect(taskStoreSpy.getTasks).toHaveBeenCalled();
     expect(component.tasks()).toEqual(mockTasks);
   });
 });

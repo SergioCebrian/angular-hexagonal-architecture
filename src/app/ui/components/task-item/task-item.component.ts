@@ -1,5 +1,5 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
-import { TaskStore } from '@task:infra/store/task-store';
+import { TaskStoreActions } from '@task:application/store/task-store-actions';
 import { DeleteTask } from '@task:application/usecases/delete-task/delete-task';
 import { UpdateTask } from '@task:application/usecases/update-task/update-task';
 import { ITask } from '@task:domain/models/task.model';
@@ -15,7 +15,7 @@ export class TaskItemComponent {
   task: InputSignal<ITask> = input.required<ITask>();
   readonly #deleteTask = inject(DeleteTask);
   readonly #updateTask = inject(UpdateTask);
-  readonly #taskStore = inject(TaskStore);
+  readonly #taskStore = inject(TaskStoreActions);
 
   #toggleCompletedStatus(event: Event): ITask {
     const checkedStatus = (<HTMLInputElement>event.target).checked;
@@ -27,7 +27,7 @@ export class TaskItemComponent {
   async #doUpdateTask(task: ITask): Promise<void> {
     const response: unknown = await this.#updateTask.updateTask(task);
     if (response) {
-      this.#taskStore.updateTaskAction(task);
+      this.#taskStore.updateTask(task);
     }
   }
 
@@ -36,7 +36,7 @@ export class TaskItemComponent {
       this.task().id
     );
     if (response) {
-      this.#taskStore.deleteTaskAction(this.task().id);
+      this.#taskStore.deleteTask(this.task().id);
     }
   }
 

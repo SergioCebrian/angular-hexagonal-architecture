@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TaskStore } from '@task:infra/store/task-store';
+import { TaskStoreActions } from '@task:application/store/task-store-actions';
 import { CreateTask } from '@task:application/usecases/create-task/create-task';
 import { ITask } from '@task:domain/models/task.model';
 
@@ -18,7 +18,7 @@ import { ITask } from '@task:domain/models/task.model';
 })
 export class TaskCreateFormComponent {
   readonly #createTask = inject(CreateTask);
-  readonly #taskStore = inject(TaskStore);
+  readonly #taskStore = inject(TaskStoreActions);
 
   createTaskForm = new FormGroup({
     title: new FormControl('', [
@@ -38,7 +38,7 @@ export class TaskCreateFormComponent {
       };
       const response: ITask = await this.#createTask.createTask(newTask);
       if (response) {
-        this.#taskStore.createTaskAction(newTask);
+        this.#taskStore.createTask(newTask);
       }
       this.createTaskForm.reset();
     }
